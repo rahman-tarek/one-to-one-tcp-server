@@ -25,12 +25,12 @@ int main(void)
 	printf("Socket successfully created\n");
 
 	// assign IP, PORT
-	sockaddr_in.sin_family = AF_INET; // IPV4
-	sockaddr_in.sin_port = htons(PORT);
-	sockaddr_in.sin_addr.s_addr = htonl(INADDR_ANY);
+	server_addr.sin_family = AF_INET; // IPV4
+	server_addr.sin_port = htons(PORT);
+	server_addr.sin_addr.s_addr = htonl(INADDR_ANY);
 
 	// binding socket to IP, PORT
-	if(bind(server_fd, (struct sockaddr*)&server_addr, sizeof(server_addr))
+	if(bind(server_fd, (struct sockaddr*)&server_addr, sizeof(server_addr)))
 	{
 		perror("socket bind failed...\n");
 		exit(EXIT_FAILURE);
@@ -58,7 +58,7 @@ int main(void)
 	printf("Client message: %s\n", buffer);
 
 	// Send data to client
-	const *response = "Hey, from server!";
+	const char *response = "Hey, from server!";
 	send(client_fd, response, sizeof(response), 0);
 
 	close(server_fd);
